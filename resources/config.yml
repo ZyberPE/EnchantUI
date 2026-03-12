@@ -1,0 +1,62 @@
+messages:
+  success: "§aEnchantment applied!"
+  not-enough-xp: "§cYou don't have enough XP levels!"
+  hold-item: "§cHold an item to enchant."
+  invalid-item: "§cThat item cannot be enchanted."
+
+items:
+
+  swords:
+    enchants:
+      sharpness:
+        1: 5
+        2: 10
+        3: 15
+        4: 20
+        5: 25
+      smite:
+        1: 5
+        2: 10
+        3: 15
+        4: 20
+        5: 25
+      unbreaking:
+        1: 4
+        2: 8
+        3: 12
+      fire_aspect:
+        1: 10
+        2: 20
+
+  pickaxes:
+    enchants:
+      efficiency:
+        1: 5
+        2: 10
+        3: 15
+        4: 20
+        5: 25
+      fortune:
+        1: 15
+        2: 25
+        3: 40
+      unbreaking:
+        1: 4
+        2: 8
+        3: 12
+
+  armor:
+    enchants:
+      protection:
+        1: 5
+        2: 10
+        3: 15
+        4: 20
+      thorns:
+        1: 15
+        2: 25
+        3: 35
+      unbreaking:
+        1: 4
+        2: 8
+        3: 12
