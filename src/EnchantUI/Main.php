@@ -19,6 +19,8 @@ use pocketmine\item\Shovel;
 use pocketmine\item\enchantment\VanillaEnchantments;
 use pocketmine\item\enchantment\EnchantmentInstance;
 
+use jojoe77777\FormAPI\SimpleForm;
+
 class Main extends PluginBase implements Listener{
 
     public function onEnable() : void{
@@ -64,16 +66,13 @@ class Main extends PluginBase implements Listener{
 
             default => null
         };
-
     }
 
     private function openEnchantMenu(Player $player,string $type) : void{
 
-        $formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-
         $enchants = $this->getConfig()->get("items")[$type]["enchants"];
 
-        $form = $formapi->createSimpleForm(function(Player $player,$data) use ($enchants,$type){
+        $form = new SimpleForm(function(Player $player,$data) use ($enchants,$type){
 
             if($data === null) return;
 
@@ -84,7 +83,7 @@ class Main extends PluginBase implements Listener{
         });
 
         $form->setTitle("EnchantUI");
-        $form->setContent("Select enchantment");
+        $form->setContent("Select an enchantment");
 
         foreach($enchants as $name => $levels){
             $form->addButton(ucfirst(str_replace("_"," ",$name)));
@@ -95,11 +94,9 @@ class Main extends PluginBase implements Listener{
 
     private function openLevelMenu(Player $player,string $type,string $enchant) : void{
 
-        $formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-
         $levels = $this->getConfig()->get("items")[$type]["enchants"][$enchant];
 
-        $form = $formapi->createSimpleForm(function(Player $player,$data) use ($levels,$enchant){
+        $form = new SimpleForm(function(Player $player,$data) use ($levels,$enchant){
 
             if($data === null) return;
 
@@ -153,6 +150,9 @@ class Main extends PluginBase implements Listener{
             "knockback" => VanillaEnchantments::KNOCKBACK(),
 
             "protection" => VanillaEnchantments::PROTECTION(),
+            "fire_protection" => VanillaEnchantments::FIRE_PROTECTION(),
+            "blast_protection" => VanillaEnchantments::BLAST_PROTECTION(),
+            "projectile_protection" => VanillaEnchantments::PROJECTILE_PROTECTION(),
             "thorns" => VanillaEnchantments::THORNS(),
             "respiration" => VanillaEnchantments::RESPIRATION(),
             "aqua_affinity" => VanillaEnchantments::AQUA_AFFINITY(),
