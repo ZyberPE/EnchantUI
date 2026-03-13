@@ -5,7 +5,6 @@ namespace EnchantUI;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-
 use pocketmine\player\Player;
 
 use pocketmine\block\VanillaBlocks;
@@ -51,6 +50,13 @@ class Main extends PluginBase implements Listener{
             return;
         }
 
+        $itemsConfig = $this->getConfig()->get("items");
+
+        if(!isset($itemsConfig[$type])){
+            $player->sendMessage($this->getConfig()->get("messages")["invalid-item"]);
+            return;
+        }
+
         $this->openEnchantMenu($player,$type);
     }
 
@@ -70,16 +76,17 @@ class Main extends PluginBase implements Listener{
 
     private function openEnchantMenu(Player $player,string $type) : void{
 
-        $enchants = $this->getConfig()->get("items")[$type]["enchants"];
+        $itemsConfig = $this->getConfig()->get("items");
+        $enchants = $itemsConfig[$type]["enchants"];
 
         $form = new SimpleForm(function(Player $player,$data) use ($enchants,$type){
 
             if($data === null) return;
 
             $names = array_keys($enchants);
-            $enchant = $names[$data];
+            $selected = $names[$data];
 
-            $this->openLevelMenu($player,$type,$enchant);
+            $this->openLevelMenu($player,$type,$selected);
         });
 
         $form->setTitle("EnchantUI");
@@ -114,7 +121,9 @@ class Main extends PluginBase implements Listener{
 
             $enchantObj = $this->getEnchantByName($enchant);
 
-            if($enchantObj === null) return;
+            if($enchantObj === null){
+                return;
+            }
 
             $item->addEnchantment(new EnchantmentInstance($enchantObj,$level));
 
